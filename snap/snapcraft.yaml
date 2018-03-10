@@ -1,0 +1,34 @@
+name: usbutils-lool
+version: None
+summary: USB utilities for Linux, including lsusb
+description: |
+  USB utilities for Linux, including lsusb. Make sure you connect the
+  raw-usb and network-control interfaces with
+  `snap connect usbutils:network-control :network-control` and
+  `snap connect usbutils:raw-usb :raw-usb`
+grade: stable
+confinement: strict
+
+apps:
+  lsusb:
+    command: bin/lsusb
+    plugs: [network-control, raw-usb]
+  usb-devices:
+    command: bin/usb-devices
+    plugs: [raw-usb]
+  # XXX only works in devmode; permission error with
+  # `sudo usbutils.usbhid-dump`, but this should be granted by raw-usb?!
+  # libusb: error [_get_usbfs_fd] libusb couldn't open USB device /dev/bus/usb/00m/00n: Operation not permitted
+  usbhid-dump:
+    command: bin/usbhid-dump
+    plugs: [network-control, raw-usb]
+
+parts:
+  usbutils:
+    source: https://github.com/gregkh/usbutils.git
+    plugin: autotools
+    build-packages: [libudev-dev, libusb-1.0-0-dev, pkg-config]
+    prepare: |
+      git submodule init
+      git submodule update
+
