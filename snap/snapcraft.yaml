@@ -4,8 +4,10 @@ summary: USB utilities for Linux, including lsusb
 description: |
   USB utilities for Linux, including lsusb. Make sure you connect the
   raw-usb and network-control interfaces with
-  `snap connect usbutils:network-control :network-control` and
-  `snap connect usbutils:raw-usb :raw-usb`
+  ```
+  snap connect usbutils-lool:network-control :network-control
+  snap connect usbutils-lool:raw-usb :raw-usb
+  ```
 grade: stable
 confinement: strict
 
